@@ -27,3 +27,10 @@ spec:
     namespace: dev
   validation: client
   targetNamespace: dev
+  patchesStrategicMerge:
+  - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    kind: HelmRelease
+    metadata:
+      name: podinfo
+    spec:
+      targetNamespace: dev
