@@ -23,7 +23,7 @@ spec:
   serviceAccountName: flux-reconciler
   sourceRef:
     kind: GitRepository
-    name: podinfo-app-git-repository
+    name: podinfo-app-git-repo
     namespace: dev
   validation: client
   targetNamespace: dev
