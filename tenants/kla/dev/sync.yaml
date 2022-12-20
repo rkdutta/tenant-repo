@@ -6,7 +6,7 @@ metadata:
   namespace: ccs-vp-dev-kla
 spec:
   interval: 5m0s
-  path: ./deploy
+  path: ./release
   prune: true
   serviceAccountName: flux-reconciler
   sourceRef:
