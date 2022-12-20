@@ -10,20 +10,20 @@ spec:
     branch: main
   url: https://github.com/rkdutta/app-repo
 
-# ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
-# kind: Kustomization
-# metadata:
-#   name: ks-podinfo-tenant-dev
-#   namespace: ccs-vp-dev-kla
-# spec:
-#   interval: 5m0s
-#   path: ./release
-#   prune: true
-#   serviceAccountName: flux-reconciler
-#   sourceRef:
-#     kind: GitRepository
-#     name: app-git-repository
-#     namespace: ccs-vp-dev-kla
-#   validation: client
-#   targetNamespace: ccs-vp-dev-kla
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: ks-podinfo-tenant-dev
+  namespace: dev
+spec:
+  interval: 5m0s
+  path: ./deploy
+  prune: true
+  serviceAccountName: flux-reconciler
+  sourceRef:
+    kind: GitRepository
+    name: podinfo-app-git-repository
+    namespace: dev
+  validation: client
+  targetNamespace: dev
