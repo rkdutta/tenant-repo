@@ -1,0 +1,36 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: podinfo-app-git-repo
+  namespace: acc
+spec:
+  interval: 30s
+  ref:
+    branch: main
+  url: https://github.com/rkdutta/app-repo
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: ks-podinfo-tenant-acc
+  namespace: acc
+spec:
+  interval: 5m0s
+  path: ./deploy
+  prune: true
+  serviceAccountName: flux-reconciler
+  sourceRef:
+    kind: GitRepository
+    name: podinfo-app-git-repo
+    namespace: acc
+  validation: client
+  targetNamespace: acc
+  patchesStrategicMerge:
+  - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    kind: HelmRelease
+    metadata:
+      name: podinfo
+    spec:
+      targetNamespace: acc
