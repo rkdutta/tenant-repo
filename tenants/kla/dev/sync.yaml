@@ -3,7 +3,6 @@ apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
 metadata:
   name: podinfo-app-git-repo
-  namespace: dev
 spec:
   interval: 30s
   ref:
@@ -14,8 +13,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
 metadata:
-  name: ks-podinfo-tenant-dev
-  namespace: dev
+  name: ks-podinfo-tenant
 spec:
   interval: 5m0s
   path: ./deploy
@@ -24,7 +22,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: podinfo-app-git-repo
-    namespace: dev
   validation: client
   targetNamespace: dev
   patchesStrategicMerge:
