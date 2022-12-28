@@ -31,14 +31,16 @@ spec:
       name: podinfo
     spec:
       targetNamespace: acc
-      valuesFrom:
-      - kind: ConfigMap
-        name: config-specific
+      # valuesFrom:
+      # - kind: ConfigMap
+      #   name: config-specific
   patches:
   - patch: |-
       - op: add
-        path: /spec/valuesFrom
-        value: new    
+        path: /spec/valuesFrom/1
+        value:
+           kind: ConfigMap
+           name: config-specific
     target:
       group: helm.toolkit.fluxcd.io
       version: v2beta1
