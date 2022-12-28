@@ -31,6 +31,6 @@ spec:
       name: podinfo
     spec:
       targetNamespace: acc
-    valuesFrom:
-    - kind: ConfigMap
-      name: config-specific
+      valuesFrom:
+      - kind: ConfigMap
+        name: config-specific
