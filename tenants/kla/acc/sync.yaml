@@ -37,7 +37,7 @@ spec:
         path: /spec/valuesFrom/1
         value:
            kind: ConfigMap
-           name: config-acc
+           name: config-specific
     target:
       group: helm.toolkit.fluxcd.io
       version: v2beta1
