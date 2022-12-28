@@ -3,3 +3,8 @@ kind: Kustomization
 resources:
 - sync.yaml
 namespace: acc
+
+configMapGenerator:
+- name: config-acc
+  files:
+  - values.yaml=values-acc.yaml
