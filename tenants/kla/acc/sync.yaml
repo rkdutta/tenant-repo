@@ -40,7 +40,6 @@ spec:
         path: /some/existing/path
         value: new value    
     target:
-      apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       metadata:
         name: podinfo
