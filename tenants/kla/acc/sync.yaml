@@ -31,9 +31,6 @@ spec:
       name: podinfo
     spec:
       targetNamespace: acc
-      # valuesFrom:
-      # - kind: ConfigMap
-      #   name: config-specific
   patches:
   - patch: |-
       - op: add
