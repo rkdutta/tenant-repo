@@ -24,5 +24,5 @@ patches:
       kind: HelmRelease
       name: podinfo
 
-# configurations:
-#   - kustomizeconfig.yaml
+configurations:
+  - kustomizeconfig.yaml
