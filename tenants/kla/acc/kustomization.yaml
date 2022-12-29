@@ -9,7 +9,7 @@ configMapGenerator:
   files:
   - values.yaml=values-acc.yaml
   options:
-    disableNameSuffixHash: false
+    disableNameSuffixHash: true
 
 configurations:
   - kustomizeconfig.yaml
