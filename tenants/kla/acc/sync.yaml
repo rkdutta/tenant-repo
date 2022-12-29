@@ -30,6 +30,8 @@ spec:
     metadata:
       name: podinfo
     spec:
+      releaseName: podinfo-acc
+      serviceAccountName: flux-reconciler
       targetNamespace: acc
       # valuesFrom:
       # - kind: ConfigMap
