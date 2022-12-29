@@ -10,6 +10,3 @@ configMapGenerator:
   - values.yaml=values-acc.yaml
   options:
     disableNameSuffixHash: false
-
-configurations:
-  - kustomizeconfig.yaml
