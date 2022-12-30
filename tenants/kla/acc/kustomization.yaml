@@ -11,15 +11,15 @@ configMapGenerator:
   options:
     disableNameSuffixHash: false
 
-patches:
-  - patch: |-
-      - op: add
-        path: /spec/patchesStrategicMerge/1/spec/valuesFrom/1
-        value:
-           kind: ConfigMap
-           name: config-acc
-    target:
-      group: kustomize.toolkit.fluxcd.io
-      version: v1beta1
-      kind: Kustomization
-      name: tenant-app-sync
+# patches:
+#   - patch: |-
+#       - op: add
+#         path: /spec/patchesStrategicMerge/0/spec/valuesFrom/0
+#         value:
+#            kind: ConfigMap
+#            name: config-acc
+#     target:
+#       group: kustomize.toolkit.fluxcd.io
+#       version: v1beta1
+#       kind: Kustomization
+#       name: tenant-app-sync
