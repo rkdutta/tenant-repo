@@ -22,4 +22,4 @@ patches:
       group: helm.toolkit.fluxcd.io
       version: v2beta1
       kind: HelmRelease
-      name: podinfo
+      name: podinfo-acc
