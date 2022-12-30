@@ -33,6 +33,21 @@ spec:
       releaseName: podinfo-acc
       serviceAccountName: flux-reconciler
       targetNamespace: acc
+  patches:
+  - patch: |-
+      - op: add
+        path: /spec/valuesFrom/1
+        value:
+           kind: ConfigMap
+           name: config-acc
+    target:
+      group: helm.toolkit.fluxcd.io
+      version: v2beta1
+      kind: HelmRelease
+      name: podinfo
+
+
+
       # postRenderers:
       # - kustomize:
       #   #patchesStrategicMerge:
@@ -53,15 +68,3 @@ spec:
       #   name: config-default
       # - kind: ConfigMap
       #   name: config-acc
-  patches:
-  - patch: |-
-      - op: add
-        path: /spec/valuesFrom/1
-        value:
-           kind: ConfigMap
-           name: config-acc
-    target:
-      group: helm.toolkit.fluxcd.io
-      version: v2beta1
-      kind: HelmRelease
-      name: podinfo
