@@ -35,7 +35,8 @@ spec:
       targetNamespace: acc
       postRenderers:
       - kustomize:
-        patches:
+        patchesStrategicMerge:
+        #patches:
         - patch: |-
             - op: add
               path: /spec/valuesFrom/1
