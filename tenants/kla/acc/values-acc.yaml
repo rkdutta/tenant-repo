@@ -13,7 +13,7 @@ image:
 
 ui:
   color: "#34577c"
-  message: "UPDATED-ACC-v8"
+  message: "UPDATED-ACC-v9"
   logo: ""
 
 # failure conditions
