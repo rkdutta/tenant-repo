@@ -23,6 +23,3 @@ patches:
       version: v2beta1
       kind: HelmRelease
       name: podinfo
-
-configurations:
-  - kustomizeconfig.yaml
