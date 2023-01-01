@@ -6,3 +6,5 @@ global:
   imagePullSecrets:
   - imageRegistry: ccscicd.azurecr.io
     name: default-regcred
+db-configurator:
+  enabled: false
