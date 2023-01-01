@@ -1,5 +1,4 @@
 foo: "bar"
 meta:
-  entry: acc
-  env: acc
+  to: acc
   tesing: acc
