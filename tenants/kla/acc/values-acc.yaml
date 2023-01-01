@@ -2,3 +2,7 @@ foo: "acc"
 meta:
   to: acc
   tesing: acc
+global:
+  imagePullSecrets:
+  - imageRegistry: ccscicd.azurecr.io
+    name: default-regcred
