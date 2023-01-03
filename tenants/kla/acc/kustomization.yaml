@@ -7,6 +7,6 @@ configMapGenerator:
 - behavior: merge
   files:
   - files/values.yaml
-  name: helmrelease-values-acc
+  name: helmrelease-values
 configurations:
 - kustomizeconfig.yaml
