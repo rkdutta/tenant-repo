@@ -1,0 +1,435 @@
+global:
+  imagePullSecrets:
+  - name: credentials-registry-prod-azure
+db-configurator:
+  enabled: true
+  configMapEnvRefs:
+    - name: endpoint-db-wm
+    - name: endpoint-db-attachment
+    - name: endpoint-db-cache
+    - name: endpoint-db-cs
+    - name: endpoint-db-drs
+    - name: endpoint-db-events
+    - name: endpoint-db-ewih
+    - name: endpoint-db-rcip
+    - name: endpoint-db-questionnaire
+  secretEnvRefs:
+    - name: credentials-db-wm
+    - name: credentials-db-attachment
+    - name: credentials-db-cache
+    - name: credentials-db-cs
+    - name: credentials-db-drs
+    - name: credentials-db-events
+    - name: credentials-db-ewih
+    - name: credentials-db-rcip
+    - name: credentials-db-questionnaire
+db-initializer:
+  configMapEnvRefs:
+    - name: endpoint-db-wm
+    - name: endpoint-db-ewih
+  secretEnvRefs:
+    - name: credentials-db-wm
+    - name: credentials-db-ewih
+universal-messaging:
+integration-server:
+  enabled: true
+  nameOverride: is
+  image:
+    terminationGracePeriodSeconds: 3600
+  licensesConfigMapRef:
+    name: wm-licenses
+  licensesConfigMapKeys:
+    msr : MicroservicesRuntime.xml
+    mft : ActiveTransfer_Server.xml
+    tsa : terracotta-license.key
+  keySecrets:
+    name: keystore-is
+    mountPath: "/opt/softwareag/common/conf"
+  configMapEnvRefs:
+    - name: endpoint-db-wm
+    - name: endpoint-db-cache
+    - name: endpoint-db-cs
+    - name: endpoint-db-drs
+    - name: endpoint-db-ewih
+    - name: endpoint-db-questionnaire
+    - name: endpoint-db-questionnaire-read
+    - name: endpoint-um
+    - name: endpoint-mws
+  secretEnvRefs:
+    - name: credentials-is
+    - name: credentials-db-wm
+    - name: credentials-db-cache
+    - name: credentials-db-cs
+    - name: credentials-db-drs
+    - name: credentials-db-ewih
+    - name: credentials-db-questionnaire
+    - name: credentials-db-questionnaire-read
+  envs:
+    - name: DISABLED_PACKAGES
+      value: RI_Level_v121,RI_Level_v133,RI_Level_v143,RI_Level_v144,RI_Level_v152,RI_Level_v153
+    - name: WS_CONS_CONFIGURATION_HOST
+      value: kla-acc-configuration-service
+    - name: WS_CONS_CONFIGURATION_PORT
+      value: "9096"
+    - name: WS_CONS_EWIHHTTP_HOST
+      value: kla-acc-ewih-service
+    - name: WS_CONS_EWIHHTTP_PORT
+      value: "9081"
+    - name: GV_CUSTOMBACKENDS_USEHTTPALIASES
+      value: "true"
+    - name: GV_DRS_V2_NASPATH
+      value: /home/webmethods
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: is-acc.ota-dip-klaverblad.nl
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              servicePort: 5555
+    tls:
+      - hosts:
+          - is-acc.ota-dip-klaverblad.nl
+        secretName: ota-dip-klaverblad-nl-tls
+    mft:
+      enabled: false
+      vfs : "/home/webmethods/mft-storage/"
+      persistenceStorage: 1Gi
+      storageClassName: redundant
+my-webmethods-server:
+  enabled: true
+  nameOverride: mws
+  configMapEnvRefs:
+    - name: endpoint-db-wm
+    - name: endpoint-um
+    - name: endpoint-is
+    - name: endpoint-ip-ldap
+  secretEnvRefs:
+    - name: credentials-db-wm
+    - name: credentials-um
+    - name: credentials-is
+    - name: credentials-ip-ldap
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: mws-acc.ota-dip-klaverblad.nl
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              servicePort: 8585
+    tls:
+      - hosts:
+          - mws-acc.ota-dip-klaverblad.nl
+        secretName: ota-dip-klaverblad-nl-tls
+    mft :
+      enabled: false
+api-gateway:
+  enabled: true
+  nameOverride: apigw
+  licensesConfigMapRef:
+    name: wm-licenses
+  licensesConfigMapKeys:
+    apigw: APIGatewayAdvanced.xml
+    tsa : terracotta-license.key
+  resources:
+    limits:
+      cpu: "2"
+      memory: 32Gi
+    requests:
+      cpu: "1"
+      memory: 16Gi
+  persistence:
+    storageClassName: redundant
+  internalDataStore:
+    envs:
+      - name: JVM_MEM
+        value: 16g
+    resources:
+      requests:
+        cpu: 500m
+        memory: 16Gi
+  configMapEnvRefs:
+    - name: endpoint-db-ewih
+    - name: endpoint-is
+    - name: endpoint-ip-ldap
+  secretEnvRefs:
+    - name: credentials-db-ewih
+    - name: credentials-ip-ldap
+  envs:
+    - name: ES_HOST
+      value: kla-acc-apigw-es
+    - name: KC_HOST
+      value: iam.ota-1.dip.ccs.nl
+    - name: KC_REALM
+      value: klaverblad-acc
+    - name: JVM_MEM
+      value: 16g
+    - name: ALIAS_ESB
+      value: http://kla-acc-is:5555
+    - name: ALIAS_LOCAL_IS
+      value: http://localhost:5555
+    - name: ALIAS_REMOTE
+      value: http://kla-acc-is:5555
+  additionalApplications:
+    configMapRef: api-gateway-applications
+  enabledPolicies:
+    configMapRef: api-gateway-policies
+  additionalJWTCertificates:
+    secretMapRef: keystore-apigw
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: apigw-acc.ota-dip-klaverblad.nl
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              servicePort: 9072
+      - host: apigwis-acc.ota-dip-klaverblad.nl
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              servicePort: 5555
+      - host: acc.ota-dip-klaverblad.nl
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              servicePort: 5555                  
+    tls:
+      - hosts:
+          - apigw-acc.ota-dip-klaverblad.nl
+        secretName: ota-dip-klaverblad-nl-tls
+      - hosts:
+          - apigwis-acc.ota-dip-klaverblad.nl
+        secretName: ota-dip-klaverblad-nl-tls
+      - hosts:
+          - acc.ota-dip-klaverblad.nl
+        secretName: ota-dip-klaverblad-nl-tls
+ewih-service:
+  enabled: true
+  configMapEnvRefs:
+    - name: endpoint-db-ewih
+    - name: endpoint-um
+    - name: endpoint-is
+    - name: endpoint-memcached
+  secretEnvRefs:
+    - name: credentials-db-ewih
+    - name: credentials-um
+  service:
+    port: 9081
+    containerPort: 9081
+  ingress:
+    enabled: true
+configuration-service:
+  enabled: true
+  configMapEnvRefs:
+    - name: endpoint-db-cs
+    - name: endpoint-um
+    - name: endpoint-is
+    - name: endpoint-memcached
+  secretEnvRefs:
+    - name: credentials-db-cs
+    - name: credentials-um
+  service:
+    port: 9096
+    containerPort: 9096
+process-service:
+  enabled: false
+  configMapEnvRefs:
+    - name: endpoint-db-attachments
+    - name: endpoint-db-attachment
+    - name: endpoint-db-events
+    - name: endpoint-db-event
+    - name: endpoint-db-process
+    - name: endpoint-db-wm
+    - name: endpoint-db-cs
+    - name: endpoint-db-ewih
+    - name: endpoint-um
+    - name: endpoint-is
+    - name: endpoint-memcached
+  secretEnvRefs:
+    - name: credentials-db-attachments
+    - name: credentials-db-attachment
+    - name: credentials-db-events
+    - name: credentials-db-event
+    - name: credentials-db-process
+    - name: credentials-db-wm
+    - name: credentials-db-cs
+    - name: credentials-db-ewih
+    - name: credentials-um
+  service:
+    port: 9092
+    containerPort: 9092
+  ingress:
+    enabled: false
+ldap:
+  enabled: true
+  secretEnvRefs:
+    - name: credentials-ip-ldap
+  initConfiguration:
+    secretRef: ldap-init-configuration
+  additionalConfigurations:
+    secretRef: ldap-configuration
+  persistence:
+    storageClass: redundant
+    storage: 1Gi
+memcached:
+  enabled: true
+kie-server:
+  enabled: true
+  imagePullSecrets:
+    - name: credentials-registry-prod-azure
+  nameOverride: bc-server
+  secretEnvRefs:
+    - name: kie-maven-endpoints
+    - name: kie-server-maven-endpoints
+    - name: kie-server-controller-endpoints
+    - name: kie-server-auth-endpoints
+  envs:
+  - name: JAVA_OPTS
+    value: -Xms256m -Xmx4096m -Djava.net.preferIPv4Stack=true -Dfile.encoding=UTF-8
+  - name: KIE_SERVER_ID
+    value: kie-server-dev
+  - name: KIE_SERVER_LOCATION
+    value: http://kla-acc-bc-server/kie-server/services/rest/server
+  - name: KIE_SERVER_CONTROLLER
+    value: https://workbench-acc.ota-dip-klaverblad.nl/business-central/rest/controller
+  - name: KIE_MAVEN_REPO
+    value: https://workbench-acc.ota-dip-klaverblad.nl/business-central/maven2
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: kie-acc.ota-dip-klaverblad.nl
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              servicePort: 80
+    tls:
+      - hosts:
+          - kie-acc.ota-dip-klaverblad.nl
+        secretName: ota-dip-klaverblad-nl-tls
+kie-workbench:
+  enabled: true
+  imagePullSecrets:
+    - name: credentials-registry-prod-azure
+  nameOverride: bc-workbench
+  secretEnvRefs:
+    - name: kie-workbench-auth-endpoints
+    - name: kie-workbench-kie-server-auth
+    - name: kie-maven-endpoints
+  envs:
+    - name: JAVA_OPTS
+      value: -Xms256m -Xmx8192m -XX:MetaspaceSize=128M -XX:MaxMetaspaceSize=1024m -Djava.net.preferIPv4Stack=true -Dfile.encoding=UTF-8 -Djava.security.properties=/opt/jboss/wildfly/standalone/configuration/java.security.properties
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: workbench-acc.ota-dip-klaverblad.nl
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              servicePort: 80
+    tls:
+      - hosts:
+          - workbench-acc.ota-dip-klaverblad.nl
+        secretName: ota-dip-klaverblad-nl-tls
+postRenderers:
+- kustomize:
+    patchesStrategicMerge:
+      - apiVersion: apps/v1
+        kind: StatefulSet
+        metadata:
+          name: kla-acc-um
+        spec:
+          template:
+            spec:
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1724
+                fsGroup: 1724
+      - apiVersion: apps/v1
+        kind: StatefulSet
+        metadata:
+          name: kla-acc-apigw-es
+        spec:
+          template:
+            spec:
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1724
+                fsGroup: 1724
+      - apiVersion: apps/v1
+        kind: StatefulSet
+        metadata:
+          name: kla-acc-ldap
+        spec:
+          template:
+            spec:
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1000
+                fsGroup: 1000
+      - apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: kla-acc-bc-server 
+        spec:
+          template:
+            spec:
+              hostAliases:
+              - hostnames:
+                - workbench-acc.ota-dip-klaverblad.nl
+                ip: 93.92.102.53
+      - apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: kla-acc-is
+        spec:
+          template:
+            spec:
+              hostAliases:
+              - hostnames:
+                - ota-oracle
+                ip: 100.93.4.20
+              - hostnames:
+                - was.ota-dip-klaverblad.nl
+                ip: 100.93.2.15
+              - hostnames:
+                - ws01a.ota-dip-klaverblad.nl
+                ip: 100.93.2.10
+              - hostnames:
+                - ws02a.ota-dip-klaverblad.nl
+                ip: 100.93.2.20
+              - hostnames:
+                - acc.ota-dip-klaverblad.nl
+                ip: 93.92.102.53
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1724
+                fsGroup: 1724
+      - apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: kla-acc-apigw
+        spec:
+          template:
+            spec:
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1724
+                fsGroup: 1724
