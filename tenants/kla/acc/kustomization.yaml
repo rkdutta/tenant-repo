@@ -9,5 +9,5 @@ configMapGenerator:
   files:
   - files/values.yaml
   name: helmrelease-values
-configurations:
-- kustomizeconfig.yaml
+# configurations:
+# - kustomizeconfig.yaml

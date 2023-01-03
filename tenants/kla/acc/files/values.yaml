@@ -89,7 +89,7 @@ integration-server:
           - path: /
             pathType: Prefix
             backend:
-              servicePort: 5554
+              servicePort: 5555
     tls:
       - hosts:
           - is-acc.ota-dip-klaverblad.nl
