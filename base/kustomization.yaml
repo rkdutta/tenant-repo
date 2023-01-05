@@ -5,5 +5,7 @@ configMapGenerator:
   files:
   - files/values.yaml
   name: helmrelease-values
+  options:
+    disableNameSuffixHash: true
 configurations:
 - kustomizeconfig.yaml
