@@ -284,42 +284,6 @@ ldap:
     storage: 1Gi
 memcached:
   enabled: true
-kie-server:
-  enabled: true
-  imagePullSecrets:
-    - name: credentials-registry-prod-azure
-  nameOverride: bc-server
-  secretEnvRefs:
-    - name: kie-maven-endpoints
-    - name: kie-server-maven-endpoints
-    - name: kie-server-controller-endpoints
-    - name: kie-server-auth-endpoints
-  envs:
-  - name: JAVA_OPTS
-    value: -Xms256m -Xmx4096m -Djava.net.preferIPv4Stack=true -Dfile.encoding=UTF-8
-  - name: KIE_SERVER_ID
-    value: kie-server-dev
-  - name: KIE_SERVER_LOCATION
-    value: http://kla-acc-bc-server/kie-server/services/rest/server
-  - name: KIE_SERVER_CONTROLLER
-    value: https://workbench-acc.ota-dip-klaverblad.nl/business-central/rest/controller
-  - name: KIE_MAVEN_REPO
-    value: https://workbench-acc.ota-dip-klaverblad.nl/business-central/maven2
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: nginx
-    hosts:
-      - host: kie-acc.ota-dip-klaverblad.nl
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              servicePort: 80
-    tls:
-      - hosts:
-          - kie-acc.ota-dip-klaverblad.nl
-        secretName: ota-dip-klaverblad-nl-tls
 kie-workbench:
   enabled: true
   imagePullSecrets:
