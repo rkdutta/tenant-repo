@@ -30,7 +30,6 @@ db-initializer:
   secretEnvRefs:
     - name: credentials-db-wm
     - name: credentials-db-ewih
-universal-messaging:
 integration-server:
   enabled: true
   nameOverride: is
