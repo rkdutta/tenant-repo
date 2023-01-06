@@ -4,7 +4,7 @@ configMapGenerator:
 - behavior: create
   files:
   - files/values.yaml
-  name: helmrelease-values
+  name: helmrelease-values-default
   options:
     disableNameSuffixHash: true
 configurations:

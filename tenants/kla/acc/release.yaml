@@ -16,4 +16,6 @@ spec:
         name: app-charts
   valuesFrom:
   - kind: ConfigMap
+    name: helmrelease-values-default
+  - kind: ConfigMap
     name: helmrelease-values
