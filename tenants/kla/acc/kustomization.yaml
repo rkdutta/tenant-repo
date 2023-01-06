@@ -5,7 +5,7 @@ resources:
 - release.yaml
 namespace: acc
 configMapGenerator:
-- behavior: create
+- behavior: merge
   files:
   - files/values.yaml
   name: helmrelease-values
