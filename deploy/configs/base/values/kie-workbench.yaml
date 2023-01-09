@@ -1,0 +1,3 @@
+kie-workbench:
+  memcached:
+    enabled: true

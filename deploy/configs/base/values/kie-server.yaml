@@ -1,0 +1,3 @@
+kie-server:
+  memcached:
+    enabled: true

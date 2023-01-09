@@ -1,0 +1,10 @@
+ldap:
+  enabled: true
+  secretEnvRefs:
+    - name: credentials-ip-ldap
+  initConfiguration:
+    secretRef: ldap-init-configuration
+  additionalConfigurations:
+    secretRef: ldap-configuration
+  persistence:
+    storageClass: redundant

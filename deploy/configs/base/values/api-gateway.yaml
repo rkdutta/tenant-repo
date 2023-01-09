@@ -1,0 +1,29 @@
+api-gateway:
+  enabled: true
+  nameOverride: apigw
+  resources:
+    requests:
+      memory: 12Gi
+  additionalApplications:
+    configMapRef: api-gateway-applications
+  applicationsConfig:
+    configMapRef: api-gateway-applications-config
+  enabledPolicies:
+    configMapRef: api-gateway-policies
+  additionalJWTCertificates:
+    secretMapRef: keystore-apigw
+  configMapEnvRefs:
+  - name: endpoint-db-ewih
+  - name: endpoint-is
+  - name: endpoint-ip-ldap
+  secretEnvRefs:
+  - name: credentials-db-ewih
+  - name: credentials-ip-ldap
+  - name: credentials-is
+  envs: {}
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: true

@@ -1,0 +1,29 @@
+db-configurator:
+  enabled: true
+  configMapEnvRefs:
+    - name: endpoint-db-wm
+    - name: endpoint-db-attachment
+    - name: endpoint-db-cache
+    - name: endpoint-db-cs
+    - name: endpoint-db-events
+    - name: endpoint-db-ewih
+    - name: endpoint-db-rcip
+    - name: endpoint-db-questionnaire
+    - name: endpoint-db-drs
+    - name: endpoint-db-ds
+    - name: endpoint-db-productconfigurator
+  secretEnvRefs:
+    - name: credentials-db-wm
+    - name: credentials-db-attachment
+    - name: credentials-db-cache
+    - name: credentials-db-cs
+    - name: credentials-db-events
+    - name: credentials-db-ewih
+    - name: credentials-db-rcip
+    - name: credentials-db-questionnaire
+    - name: credentials-db-drs
+    - name: credentials-db-ds
+    - name: credentials-db-productconfigurator
+  envs:
+    - name: DEPLOY_TRIGGER
+      value: DT5

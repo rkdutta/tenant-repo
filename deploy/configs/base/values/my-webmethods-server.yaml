@@ -1,0 +1,21 @@
+my-webmethods-server:
+  enabled: true
+  envs: {}
+  configMapEnvRefs:
+    - name: endpoint-db-wm
+    - name: endpoint-um
+    - name: endpoint-is
+    - name: endpoint-ip-ldap
+  secretEnvRefs:
+    - name: credentials-db-wm
+    - name: credentials-um
+    - name: credentials-is
+    - name: credentials-ip-ldap
+  service:
+    port: 8585
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"

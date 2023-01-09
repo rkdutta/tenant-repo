@@ -1,0 +1,8 @@
+db-initializer:
+  enabled: true
+  configMapEnvRefs:
+    - name: endpoint-db-wm
+    - name: endpoint-db-ewih
+  secretEnvRefs:
+    - name: credentials-db-wm
+    - name: credentials-db-ewih
