@@ -1,0 +1,184 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+configMapGenerator:
+- behavior: create
+  envs:
+  - envs/api-gateway-policies.properties
+  name: api-gateway-policies
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  envs:
+  - envs/endpoint-db-attachment.properties
+  name: endpoint-db-attachment
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  envs:
+  - envs/endpoint-db-cache.properties
+  name: endpoint-db-cache
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  envs:
+  - envs/endpoint-db-cs.properties
+  name: endpoint-db-cs
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  envs:
+  - envs/endpoint-db-drs.properties
+  name: endpoint-db-drs
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  envs:
+  - envs/endpoint-db-events.properties
+  name: endpoint-db-events
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  envs:
+  - envs/endpoint-db-ewih.properties
+  name: endpoint-db-ewih
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  envs:
+  - envs/endpoint-db-questionnaire-read.properties
+  name: endpoint-db-questionnaire-read
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  envs:
+  - envs/endpoint-db-questionnaire.properties
+  name: endpoint-db-questionnaire
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  envs:
+  - envs/endpoint-db-rcip.properties
+  name: endpoint-db-rcip
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  envs:
+  - envs/endpoint-db-wm.properties
+  name: endpoint-db-wm
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  envs:
+  - envs/endpoint-ip-ldap.properties
+  name: endpoint-ip-ldap
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  envs:
+  - envs/endpoint-is.properties
+  name: endpoint-is
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  envs:
+  - envs/endpoint-memcached.properties
+  name: endpoint-memcached
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  envs:
+  - envs/endpoint-um.properties
+  name: endpoint-um
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  files:
+  - files/api-gateway-applications-config.yaml
+  name: api-gateway-applications-config
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  files:
+  - values.yaml=values/api-gateway.yaml
+  name: api-gateway-common-config
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  files:
+  - values.yaml=values/db-configurator.yaml
+  name: db-configurator-common-config
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  files:
+  - values.yaml=values/db-initializer.yaml
+  name: db-initializer-common-config
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  files:
+  - values.yaml=values/ewih-service.yaml
+  name: ewih-service-common-config
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  files:
+  - values.yaml=values/globals.yaml
+  name: globals-common-config
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  files:
+  - values.yaml=values/integration-server.yaml
+  name: integration-server-common-config
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  files:
+  - values.yaml=values/kie-server.yaml
+  name: kie-server-common-config
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  files:
+  - values.yaml=values/kie-workbench.yaml
+  name: kie-workbench-common-config
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  files:
+  - values.yaml=values/ldap.yaml
+  name: ldap-common-config
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  files:
+  - values.yaml=values/memcached.yaml
+  name: memcached-common-config
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  files:
+  - values.yaml=values/my-webmethods-server.yaml
+  name: my-webmethods-server-common-config
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  files:
+  - values.yaml=values/process-service.yaml
+  name: process-service-common-config
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  files:
+  - values.yaml=values/universal-messaging-configurator.yaml
+  name: universal-messaging-configurator-common-config
+  options:
+    disableNameSuffixHash: true
+- behavior: create
+  files:
+  - values.yaml=values/universal-messaging.yaml
+  name: universal-messaging-common-config
+  options:
+    disableNameSuffixHash: true

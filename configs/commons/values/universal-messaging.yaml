@@ -1,0 +1,5 @@
+universal-messaging:
+  enabled: true
+  nameOverride: um
+  configMapEnvRefs:
+    - name: endpoint-um

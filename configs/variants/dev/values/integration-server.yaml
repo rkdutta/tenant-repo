@@ -1,0 +1,26 @@
+integration-server:
+  envs:
+    - name: DISABLED_PACKAGES
+      value: RI_Level_v121,RI_Level_v133,RI_Level_v143,RI_Level_v144,RI_Level_v152,RI_Level_v153
+    - name: WS_CONS_EWIHHTTP_HOST
+      value: kla-dev-ewih-service
+    - name: WS_CONS_EWIHHTTP_PORT
+      value: "9081"
+    - name: GV_CUSTOMBACKENDS_USEHTTPALIASES
+      value: "true"
+    - name: MWS_HOST
+      value: kla-dev-mws
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/whitelist-source-range: "80.95.163.20,149.146.5.85,193.172.150.192/26,91.240.70.5,183.82.112.139,182.73.163.98,34.91.89.124"
+    hosts:
+      - host: is.kla-dev.dev-1.dip.ccs.nl
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              servicePort: 5555
+    tls:
+      - hosts:
+          - is.kla-dev.dev-1.dip.ccs.nl
+        secretName: is-tls

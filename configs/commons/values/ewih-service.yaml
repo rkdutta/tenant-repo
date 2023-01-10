@@ -1,0 +1,13 @@
+ewih-service:
+  enabled: true
+  configMapEnvRefs:
+    - name: endpoint-db-ewih
+    - name: endpoint-um
+    - name: endpoint-is
+    - name: endpoint-memcached
+  secretEnvRefs:
+    - name: credentials-db-ewih
+    - name: credentials-um
+  service:
+    port: 9081
+    containerPort: 9081

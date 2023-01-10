@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../../configs/promotables/tst
+- ../../base
+
+namespace: tenant-kla-tst
+
+patchesStrategicMerge:
+- version-patch.yaml
+- release-patch.yaml

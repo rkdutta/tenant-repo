@@ -1,0 +1,27 @@
+process-service:
+  enabled: true
+  resources:
+    requests:
+      memory: 800Mi
+  configMapEnvRefs:
+    - name: endpoint-db-attachment
+    - name: endpoint-db-wm
+    - name: endpoint-db-cs
+    - name: endpoint-db-ewih
+    - name: endpoint-db-events
+    - name: endpoint-db-rcip
+    - name: endpoint-is
+    - name: endpoint-um
+    - name: endpoint-memcached
+  secretEnvRefs:
+    - name: credentials-db-attachment
+    - name: credentials-db-wm
+    - name: credentials-db-cs
+    - name: credentials-db-ewih
+    - name: credentials-db-events
+    - name: credentials-db-rcip
+    - name: credentials-is
+    - name: credentials-um
+  service:
+    port: 9092
+    containerPort: 9092

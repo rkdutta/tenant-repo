@@ -1,0 +1,44 @@
+integration-server:
+  enabled: true
+  envs: {}
+  nameOverride: is
+  resources:
+    requests:
+      memory: 12Gi
+    limits:
+      memory: 16Gi
+  keySecrets:
+    name: keystore-is
+    mountPath: "/opt/softwareag/common/conf"
+  configMapEnvRefs:
+    - name: endpoint-db-wm
+    - name: endpoint-db-cache
+    - name: endpoint-db-cs
+    - name: endpoint-db-ewih
+    - name: endpoint-db-questionnaire
+    - name: endpoint-db-questionnaire-read
+    - name: endpoint-um
+    - name: endpoint-ip-ldap
+    - name: endpoint-db-drs
+    - name: endpoint-db-ds
+    - name: endpoint-db-ds-read
+    - name: endpoint-db-productconfigurator
+  secretEnvRefs:
+    - name: credentials-is
+    - name: credentials-db-wm
+    - name: credentials-db-cache
+    - name: credentials-db-cs
+    - name: credentials-db-ewih
+    - name: credentials-db-questionnaire
+    - name: credentials-db-questionnaire-read
+    - name: credentials-ip-ldap
+    - name: credentials-db-drs
+    - name: credentials-db-ds
+    - name: credentials-db-ds-read
+    - name: credentials-db-productconfigurator
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"

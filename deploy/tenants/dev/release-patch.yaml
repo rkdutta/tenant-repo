@@ -1,0 +1,93 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: podinfo
+spec:
+  valuesFrom:
+  #common config
+  - kind: ConfigMap
+    name: globals-common-config
+  - kind: ConfigMap
+    name: api-gateway-common-config
+  - kind: ConfigMap
+    name: db-configurator-common-config
+  - kind: ConfigMap
+    name: db-initializer-common-config
+  - kind: ConfigMap
+    name: universal-messaging-common-config
+  - kind: ConfigMap
+    name: universal-messaging-configurator-common-config
+  - kind: ConfigMap
+    name: integration-server-common-config
+  - kind: ConfigMap
+    name: my-webmethods-server-common-config
+  - kind: ConfigMap
+    name: ewih-service-common-config
+  - kind: ConfigMap
+    name: process-service-common-config
+  - kind: ConfigMap
+    name: ldap-common-config
+  - kind: ConfigMap
+    name: memcached-common-config
+  - kind: ConfigMap
+    name: kie-server-common-config
+  - kind: ConfigMap
+    name: kie-workbench-common-config
+  #static config
+  - kind: ConfigMap
+    name: globals-static-config
+  - kind: ConfigMap
+    name: api-gateway-static-config
+  - kind: ConfigMap
+    name: db-configurator-static-config
+  - kind: ConfigMap
+    name: db-initializer-static-config
+  - kind: ConfigMap
+    name: universal-messaging-static-config
+  - kind: ConfigMap
+    name: universal-messaging-configurator-static-config
+  - kind: ConfigMap
+    name: integration-server-static-config
+  - kind: ConfigMap
+    name: my-webmethods-server-static-config
+  - kind: ConfigMap
+    name: ewih-service-static-config
+  - kind: ConfigMap
+    name: process-service-static-config
+  - kind: ConfigMap
+    name: ldap-static-config
+  - kind: ConfigMap
+    name: memcached-static-config
+  - kind: ConfigMap
+    name: kie-server-static-config
+  - kind: ConfigMap
+    name: kie-workbench-static-config
+  #promote config
+  - kind: ConfigMap
+    name: globals-promote-config
+  - kind: ConfigMap
+    name: api-gateway-promote-config
+  - kind: ConfigMap
+    name: db-configurator-promote-config
+  - kind: ConfigMap
+    name: db-initializer-promote-config
+  - kind: ConfigMap
+    name: universal-messaging-promote-config
+  - kind: ConfigMap
+    name: universal-messaging-configurator-promote-config
+  - kind: ConfigMap
+    name: integration-server-promote-config
+  - kind: ConfigMap
+    name: my-webmethods-server-promote-config
+  - kind: ConfigMap
+    name: ewih-service-promote-config
+  - kind: ConfigMap
+    name: process-service-promote-config
+  - kind: ConfigMap
+    name: ldap-promote-config
+  - kind: ConfigMap
+    name: memcached-promote-config
+  - kind: ConfigMap
+    name: kie-server-promote-config
+  - kind: ConfigMap
+    name: kie-workbench-promote-config

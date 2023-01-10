@@ -1,0 +1,6 @@
+universal-messaging-configurator:
+  enabled: true
+  nameOverride: um-configurator
+  configMapEnvRefs:
+    - name: endpoint-um
+  envs: {}

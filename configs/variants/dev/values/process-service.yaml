@@ -1,0 +1,4 @@
+process-service:
+  service:
+    port: 9092
+    containerPort: 9092
