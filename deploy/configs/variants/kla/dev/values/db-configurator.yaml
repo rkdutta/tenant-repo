@@ -1,4 +1,0 @@
-db-configurator:
-  envs:
-    - name: DEPLOY_TRIGGER
-      value: DT5

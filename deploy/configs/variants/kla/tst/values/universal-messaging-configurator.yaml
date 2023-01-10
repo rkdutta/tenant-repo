@@ -1,4 +1,0 @@
-universal-messaging-configurator:
-  envs:
-    - name: DEPLOY_TRIGGER
-      value: DT1
